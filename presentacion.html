@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecodiem x Tiendanube — Presentación Partner</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  :root { --accent:#6c5ce7; --success:#00b894; --dark:#1a1a2e; --light:#f8f9fc; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; overflow:hidden; font-family:'Inter',sans-serif; background:#111; }
+
+  .deck { height:100vh; width:100vw; position:relative; }
+  .slide {
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    padding:60px 80px; opacity:0; pointer-events:none; transition:opacity 0.5s ease;
+  }
+  .slide.active { opacity:1; pointer-events:auto; }
+  .slide.dark { background:linear-gradient(135deg, var(--dark), #16213e); color:white; }
+  .slide.white { background:white; color:var(--dark); }
+  .slide.accent { background:linear-gradient(135deg, var(--accent), #4834d4); color:white; }
+  .slide.green { background:linear-gradient(135deg, var(--success), #00cec9); color:white; }
+
+  .slide h1 { font-size:3.2rem; font-weight:900; line-height:1.1; margin-bottom:16px; letter-spacing:-2px; }
+  .slide h2 { font-size:2.4rem; font-weight:800; line-height:1.15; margin-bottom:20px; letter-spacing:-1px; }
+  .slide h3 { font-size:1.4rem; font-weight:700; margin-bottom:16px; }
+  .slide p { font-size:1.15rem; line-height:1.6; max-width:800px; }
+  .slide .subtitle { font-size:1.3rem; font-weight:300; opacity:0.7; }
+  .slide .badge { display:inline-block; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); padding:8px 24px; border-radius:30px; font-size:0.95rem; font-weight:500; margin-top:24px; }
+
+  .kpi-row { display:flex; gap:32px; margin:32px 0; flex-wrap:wrap; justify-content:center; }
+  .kpi { text-align:center; min-width:140px; }
+  .kpi .kpi-val { font-size:3.5rem; font-weight:900; line-height:1; }
+  .kpi .kpi-label { font-size:0.8rem; text-transform:uppercase; letter-spacing:1.5px; opacity:0.7; margin-top:8px; font-weight:600; }
+  .kpi .kpi-sub { font-size:0.85rem; opacity:0.6; margin-top:4px; }
+
+  .data-grid { display:grid; gap:20px; margin:24px 0; width:100%; max-width:900px; }
+  .data-grid.cols-3 { grid-template-columns:repeat(3,1fr); }
+  .data-grid.cols-4 { grid-template-columns:repeat(4,1fr); }
+  .data-box { background:rgba(255,255,255,0.08); border-radius:16px; padding:24px; text-align:center; border:1px solid rgba(255,255,255,0.1); }
+  .white .data-box { background:var(--light); border:1px solid #e8ecf1; }
+  .data-box .db-val { font-size:2.4rem; font-weight:800; margin-bottom:4px; }
+  .data-box .db-label { font-size:0.78rem; text-transform:uppercase; letter-spacing:1px; opacity:0.65; font-weight:600; }
+  .data-box .db-sub { font-size:0.85rem; opacity:0.7; margin-top:6px; }
+
+  .funnel-slide { width:100%; max-width:650px; }
+  .fs { display:flex; align-items:center; margin:8px auto; border-radius:12px; color:white; padding:14px 24px; font-weight:600; }
+  .fs .fs-label { flex:1; font-size:1rem; }
+  .fs .fs-num { font-size:1.5rem; font-weight:800; }
+  .fs .fs-pct { font-size:0.8rem; opacity:0.7; margin-left:10px; }
+
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:40px; width:100%; max-width:900px; align-items:center; }
+  .two-col .col { }
+
+  .takeaway { background:rgba(255,255,255,0.06); border-radius:16px; padding:24px 28px; margin:12px 0; border-left:4px solid var(--success); max-width:800px; width:100%; }
+  .white .takeaway { background:var(--light); border-left-color:var(--accent); }
+  .takeaway h4 { font-size:1.05rem; font-weight:700; margin-bottom:6px; }
+  .takeaway p { font-size:0.95rem; opacity:0.8; }
+
+  .progress-bar { position:fixed; bottom:0; left:0; height:4px; background:var(--accent); transition:width 0.4s; z-index:100; }
+  .nav { position:fixed; bottom:20px; right:30px; display:flex; gap:10px; z-index:100; }
+  .nav button { width:44px; height:44px; border-radius:50%; border:2px solid rgba(255,255,255,0.3); background:rgba(0,0,0,0.3); color:white; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(8px); }
+  .nav button:hover { background:var(--accent); border-color:var(--accent); }
+  .slide-counter { position:fixed; bottom:26px; left:30px; color:rgba(255,255,255,0.4); font-size:0.85rem; font-weight:600; z-index:100; }
+
+  .highlight-num { color:#fdcb6e; }
+  .highlight-green { color:#55efc4; }
+  .small { font-size:0.85rem; opacity:0.6; }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- SLIDE 0: PORTADA -->
+<div class="slide dark active" data-idx="0">
+  <h1>Maestría en<br>Ecommerce</h1>
+  <div class="subtitle">Resultados de campaña · Dic 2025 – Feb 2026</div>
+  <div class="badge">Tiendanube x Ecodiem</div>
+</div>
+
+<!-- SLIDE 1: NÚMEROS CLAVE -->
+<div class="slide accent" data-idx="1">
+  <h2>Números Clave del Período</h2>
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-val">838</div><div class="kpi-label">Paid Leads</div></div>
+    <div class="kpi"><div class="kpi-val">93</div><div class="kpi-label">Trials</div></div>
+    <div class="kpi"><div class="kpi-val">30</div><div class="kpi-label">NPs</div></div>
+    <div class="kpi"><div class="kpi-val">15</div><div class="kpi-label">New Sellers</div></div>
+  </div>
+  <p style="text-align:center; opacity:0.7;">Inversión total: <strong>$891.954 ARS</strong> · 3 meses de campaña</p>
+</div>
+
+<!-- SLIDE 2: PAID MEDIA -->
+<div class="slide white" data-idx="2">
+  <h2 style="color:var(--dark);">Paid Media: Optimización Mes a Mes</h2>
+  <div class="data-grid cols-3">
+    <div class="data-box">
+      <div class="db-label">Diciembre</div>
+      <div class="db-val" style="color:var(--dark);">135</div>
+      <div class="db-label">leads</div>
+      <div class="db-sub" style="color:var(--dark);">CPL <strong>$2.243</strong> · CTR 0,97%</div>
+    </div>
+    <div class="data-box">
+      <div class="db-label">Enero</div>
+      <div class="db-val" style="color:var(--dark);">174</div>
+      <div class="db-label">leads</div>
+      <div class="db-sub" style="color:var(--dark);">CPL <strong>$1.788</strong> · CTR 0,92%</div>
+    </div>
+    <div class="data-box" style="border-color:var(--success);">
+      <div class="db-label">Febrero</div>
+      <div class="db-val" style="color:var(--success);">529</div>
+      <div class="db-label">leads</div>
+      <div class="db-sub" style="color:var(--dark);">CPL <strong style="color:var(--success);">$526</strong> · CTR 1,85%</div>
+    </div>
+  </div>
+  <div class="kpi-row" style="margin-top:24px;">
+    <div class="kpi"><div class="kpi-val" style="color:var(--success);">-76%</div><div class="kpi-label" style="color:var(--dark);">CPL Dic→Feb</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--success);">+292%</div><div class="kpi-label" style="color:var(--dark);">Leads Dic→Feb</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:var(--success);">+91%</div><div class="kpi-label" style="color:var(--dark);">CTR Dic→Feb</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 3: CPL VISUAL -->
+<div class="slide dark" data-idx="3">
+  <h2>Costo por Lead: Caída Dramática</h2>
+  <p style="text-align:center; margin-bottom:32px; opacity:0.7;">Febrero generó 3,9x más leads que diciembre con menor inversión</p>
+  <div style="display:flex; align-items:flex-end; gap:40px; height:250px;">
+    <div style="text-align:center;">
+      <div style="width:120px; background:rgba(255,255,255,0.15); border-radius:12px 12px 0 0; height:250px; display:flex; align-items:center; justify-content:center;">
+        <span style="font-size:1.4rem; font-weight:800;">$2.243</span>
+      </div>
+      <div style="margin-top:10px; font-weight:600; opacity:0.7;">Dic</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:120px; background:rgba(255,255,255,0.15); border-radius:12px 12px 0 0; height:199px; display:flex; align-items:center; justify-content:center;">
+        <span style="font-size:1.4rem; font-weight:800;">$1.788</span>
+      </div>
+      <div style="margin-top:10px; font-weight:600; opacity:0.7;">Ene</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:120px; background:linear-gradient(180deg, var(--success), #00cec9); border-radius:12px 12px 0 0; height:59px; display:flex; align-items:center; justify-content:center;">
+        <span style="font-size:1.4rem; font-weight:800;">$526</span>
+      </div>
+      <div style="margin-top:10px; font-weight:600; color:var(--success);">Feb</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: FUNNEL -->
+<div class="slide dark" data-idx="4">
+  <h2>Funnel Completo — Dic a Feb</h2>
+  <div class="funnel-slide">
+    <div class="fs" style="background:#636e72; width:100%;"><span class="fs-label">Impresiones</span><span class="fs-num">271K</span></div>
+    <div class="fs" style="background:#b2bec3; width:88%; margin-left:6%;"><span class="fs-label">Clics</span><span class="fs-num">3.380</span><span class="fs-pct">1,25% CTR</span></div>
+    <div class="fs" style="background:var(--accent); width:74%; margin-left:13%;"><span class="fs-label">Leads</span><span class="fs-num">838</span><span class="fs-pct">24,8%</span></div>
+    <div class="fs" style="background:#4834d4; width:55%; margin-left:22%;"><span class="fs-label">Trials</span><span class="fs-num">93</span><span class="fs-pct">11,1% de leads</span></div>
+    <div class="fs" style="background:var(--success); width:40%; margin-left:30%;"><span class="fs-label">NPs</span><span class="fs-num">30</span><span class="fs-pct">32,3% de trials</span></div>
+    <div class="fs" style="background:#2d54e8; width:28%; margin-left:36%;"><span class="fs-label">New Sellers</span><span class="fs-num">15</span><span class="fs-pct">50% de NPs</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 5: CONVERSIONES MES A MES -->
+<div class="slide white" data-idx="5">
+  <h2 style="color:var(--dark);">Conversiones Mes a Mes</h2>
+  <div class="data-grid cols-3" style="margin-bottom:8px;">
+    <div class="data-box">
+      <div class="db-label" style="color:var(--dark);">Diciembre</div>
+      <div style="margin:12px 0; font-size:0.95rem; color:var(--dark); line-height:2;">
+        <strong>10</strong> Trials · <strong>6</strong> NPs · <strong>8</strong> NS<br>
+        Lead→Trial: <strong>7,4%</strong><br>
+        Trial→NP: <strong style="color:var(--success);">60%</strong>
+      </div>
+    </div>
+    <div class="data-box" style="border-color:var(--accent);">
+      <div class="db-label" style="color:var(--accent);">Enero ★</div>
+      <div style="margin:12px 0; font-size:0.95rem; color:var(--dark); line-height:2;">
+        <strong style="color:var(--accent);">50</strong> Trials · <strong style="color:var(--accent);">15</strong> NPs · <strong>2</strong> NS<br>
+        Lead→Trial: <strong style="color:var(--success);">28,7%</strong><br>
+        Trial→NP: <strong>30%</strong>
+      </div>
+    </div>
+    <div class="data-box">
+      <div class="db-label" style="color:var(--dark);">Febrero</div>
+      <div style="margin:12px 0; font-size:0.95rem; color:var(--dark); line-height:2;">
+        <strong>33</strong> Trials · <strong>9</strong> NPs · <strong>5</strong> NS<br>
+        Lead→Trial: <strong>6,2%</strong><br>
+        Trial→NP: <strong>27,3%</strong>
+      </div>
+    </div>
+  </div>
+  <p style="text-align:center; font-size:0.95rem; color:#636e72; max-width:700px;">Enero fue el pico de conversión. Febrero priorizó volumen (529 leads a CPL bajo); sus trials probablemente sigan convirtiendo a NP en marzo.</p>
+</div>
+
+<!-- SLIDE 6: UNIT ECONOMICS -->
+<div class="slide accent" data-idx="6">
+  <h2>Unit Economics</h2>
+  <div class="data-grid cols-4">
+    <div class="data-box">
+      <div class="db-label">Costo por Lead</div>
+      <div class="db-val">$1.064</div>
+      <div class="db-sub">ARS promedio</div>
+    </div>
+    <div class="data-box">
+      <div class="db-label">Costo por Trial</div>
+      <div class="db-val">$9.591</div>
+      <div class="db-sub">ARS promedio</div>
+    </div>
+    <div class="data-box" style="border-color:rgba(255,255,255,0.4);">
+      <div class="db-label">Costo por NP</div>
+      <div class="db-val">$29.732</div>
+      <div class="db-sub">ARS promedio</div>
+    </div>
+    <div class="data-box">
+      <div class="db-label">Costo por Seller</div>
+      <div class="db-val">$59.464</div>
+      <div class="db-sub">ARS promedio</div>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:20px; opacity:0.7;">Costo por Trial bajó <strong>72%</strong> entre diciembre ($30.283) y enero ($6.222)</p>
+</div>
+
+<!-- SLIDE 7: PERFIL -->
+<div class="slide white" data-idx="7">
+  <h2 style="color:var(--dark);">Perfil de los Registrados</h2>
+  <div class="two-col">
+    <div class="col">
+      <div class="data-box" style="margin-bottom:16px; text-align:left; padding:20px 24px;">
+        <div style="font-size:2.8rem; font-weight:900; color:var(--accent);">65%</div>
+        <div style="font-size:1rem; font-weight:600; color:var(--dark);">No tiene tienda online</div>
+        <div style="font-size:0.88rem; color:#636e72; margin-top:4px;">Gran pool de activación para Tiendanube</div>
+      </div>
+      <div class="data-box" style="text-align:left; padding:20px 24px;">
+        <div style="font-size:2.8rem; font-weight:900; color:#2d54e8;">26%</div>
+        <div style="font-size:1rem; font-weight:600; color:var(--dark);">Ya tiene Tiendanube</div>
+        <div style="font-size:0.88rem; color:#636e72; margin-top:4px;">Oportunidad de upgrade / capacitación</div>
+      </div>
+    </div>
+    <div class="col">
+      <div style="font-size:0.95rem; color:var(--dark); line-height:2.2;">
+        <strong style="font-size:1.1rem;">Top sectores:</strong><br>
+        &#128085; Indumentaria y accesorios — <strong>35%</strong><br>
+        &#127968; Hogar, muebles y jardín — <strong>10%</strong><br>
+        &#128187; Tecnología y electro — <strong>10%</strong><br>
+        &#127828; Alimentos y bienestar — <strong>8%</strong><br><br>
+        &#127462;&#127479; <strong>96% Argentina</strong> · 82% micro-emprendedores<br>
+        &#128176; 82% factura &lt; USD 5.000/año
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: CREATIVE INSIGHT -->
+<div class="slide dark" data-idx="8">
+  <h2>Insight de Creativos</h2>
+  <div class="two-col" style="max-width:800px;">
+    <div class="col" style="background:rgba(0,184,148,0.15); border:2px solid var(--success); border-radius:20px; padding:32px; text-align:center;">
+      <div style="font-size:2.5rem; margin-bottom:12px;">&#9989;</div>
+      <h3 style="color:var(--success);">Mejor performance</h3>
+      <p style="opacity:0.7;">Video 55 seg</p>
+      <p style="font-style:italic; margin-top:12px; font-size:1.05rem;">"Si tenés una tienda o estás queriendo crear una..."</p>
+    </div>
+    <div class="col" style="background:rgba(225,112,85,0.15); border:2px solid #e17055; border-radius:20px; padding:32px; text-align:center;">
+      <div style="font-size:2.5rem; margin-bottom:12px;">&#10060;</div>
+      <h3 style="color:#e17055;">Peor performance</h3>
+      <p style="opacity:0.7;">Video 57 seg</p>
+      <p style="font-style:italic; margin-top:12px; font-size:1.05rem;">"Atención dueños de tiendas online..."</p>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:24px; max-width:650px; font-size:1rem; opacity:0.7;">El hook <strong>inclusivo</strong> captura emprendedores en todas las etapas.<br>Consistente con que 65% aún no tiene tienda.</p>
+</div>
+
+<!-- SLIDE 9: TAKEAWAYS -->
+<div class="slide dark" data-idx="9">
+  <h2>Key Takeaways</h2>
+  <div style="max-width:750px; width:100%;">
+    <div class="takeaway">
+      <h4>&#128200; Paid Media ultra-optimizado</h4>
+      <p>CPL -76%, CTR +91%, leads +292%. Febrero fue el mes más eficiente.</p>
+    </div>
+    <div class="takeaway">
+      <h4>&#127919; 93 Trials → 30 NPs → 15 Sellers</h4>
+      <p>Tasa Trial→NP de 32,3%. NP→Seller de 50%. Funnel saludable.</p>
+    </div>
+    <div class="takeaway">
+      <h4>&#128161; Hook inclusivo gana</h4>
+      <p>"Si tenés o querés crear" supera a "atención dueños". Alineado con la audiencia.</p>
+    </div>
+    <div class="takeaway">
+      <h4>&#128717; 65% son leads sin tienda</h4>
+      <p>Enorme pool de activación. El nurturing post-curso es la palanca de crecimiento.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: PRÓXIMOS PASOS -->
+<div class="slide green" data-idx="10">
+  <h2>Próximos Pasos</h2>
+  <div style="max-width:700px; width:100%; text-align:left;">
+    <div style="display:flex; gap:16px; align-items:flex-start; margin:20px 0;">
+      <div style="font-size:1.8rem; flex-shrink:0;">1.</div>
+      <div><h3 style="margin-bottom:4px;">Nurturing post-curso</h3><p style="opacity:0.8; font-size:0.95rem;">Secuencia de activación para los registrados sin tienda → crear tienda TN</p></div>
+    </div>
+    <div style="display:flex; gap:16px; align-items:flex-start; margin:20px 0;">
+      <div style="font-size:1.8rem; flex-shrink:0;">2.</div>
+      <div><h3 style="margin-bottom:4px;">Escalar con creativo ganador</h3><p style="opacity:0.8; font-size:0.95rem;">Duplicar budget del video 55s. Explorar variaciones del hook inclusivo.</p></div>
+    </div>
+    <div style="display:flex; gap:16px; align-items:flex-start; margin:20px 0;">
+      <div style="font-size:1.8rem; flex-shrink:0;">3.</div>
+      <div><h3 style="margin-bottom:4px;">Mejorar Lead→Trial en alto volumen</h3><p style="opacity:0.8; font-size:0.95rem;">Feb tuvo 6,2% vs 28,7% de Ene. Optimizar landing/CTA para convertir más.</p></div>
+    </div>
+    <div style="display:flex; gap:16px; align-items:flex-start; margin:20px 0;">
+      <div style="font-size:1.8rem; flex-shrink:0;">4.</div>
+      <div><h3 style="margin-bottom:4px;">Activar sellers TN del curso</h3><p style="opacity:0.8; font-size:0.95rem;">148 registrados ya tienen TN → upgrade de plan, features premium.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: CIERRE -->
+<div class="slide dark" data-idx="11">
+  <h1 style="font-size:2.6rem;">Gracias</h1>
+  <p style="text-align:center; opacity:0.6; margin-top:12px; font-size:1.1rem;">Tiendanube x Ecodiem · Marzo 2026</p>
+  <div style="margin-top:40px; display:flex; gap:40px; opacity:0.5;">
+    <div style="text-align:center;"><div style="font-size:1.6rem; font-weight:800;">838</div><div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:1px;">Leads</div></div>
+    <div style="text-align:center;"><div style="font-size:1.6rem; font-weight:800;">93</div><div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:1px;">Trials</div></div>
+    <div style="text-align:center;"><div style="font-size:1.6rem; font-weight:800;">30</div><div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:1px;">NPs</div></div>
+    <div style="text-align:center;"><div style="font-size:1.6rem; font-weight:800;">15</div><div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:1px;">Sellers</div></div>
+  </div>
+</div>
+
+</div>
+
+<div class="progress-bar" id="progress"></div>
+<div class="slide-counter" id="counter">1 / 12</div>
+<div class="nav">
+  <button onclick="prev()">&#8592;</button>
+  <button onclick="next()">&#8594;</button>
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+
+function show(idx) {
+  if (idx < 0 || idx >= total) return;
+  slides[current].classList.remove('active');
+  current = idx;
+  slides[current].classList.add('active');
+  document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+  document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+}
+function next() { show(current + 1); }
+function prev() { show(current - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  if (e.key === 'Home') { e.preventDefault(); show(0); }
+  if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const diff = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(diff) > 50) { diff < 0 ? next() : prev(); }
+});
+
+show(0);
+</script>
+
+</body>
+</html>
